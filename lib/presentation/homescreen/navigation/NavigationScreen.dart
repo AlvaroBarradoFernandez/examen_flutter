@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:examen_flutter/presentation/homescreen/HomeScreen.dart';
-import 'package:examen_flutter/presentation/homescreen/answers/AnswersScreen.dart';
+import 'package:examen_flutter/presentation/homescreen/answers/AnswerPressenter.dart';
 
 class NavigationScreen extends StatefulWidget {
   NavigationScreen({Key key, this.title}) : super(key: key);

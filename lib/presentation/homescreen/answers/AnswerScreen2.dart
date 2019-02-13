@@ -6,25 +6,26 @@ import 'package:examen_flutter/presentation/homescreen/HomeView.dart';
 import 'package:examen_flutter/presentation/homescreen/answers/AnswerPressenter.dart';
 import 'package:examen_flutter/model/question.dart';
 
-class HomeScreen extends StatefulWidget {
+class AnswerScreen2 extends StatefulWidget {
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AnswerScreen2State createState() => _AnswerScreen2State();
 }
 
-class _HomeScreenState extends State<HomeScreen> implements HomeView {
-  HomePresenter _homePresenter;
-  List<Question> _users = [];
+class _AnswerScreen2State extends State<AnswerScreen2> implements HomeView {
+  AnswerPressenter _answerPressenter;
+  List<Answer> _answer = [];
   bool _isLoading = true;
   bool _isError = false;
 
-  _HomeScreenState() {
-    _homePresenter = HomePresenter(this);
+  _AnswerScreen2State() {
+    _answerPressenter = AnswerPressenter(0);
   }
 
   @override
   void initState() {
     super.initState();
-    _homePresenter.fetchData();
+    _answerPressenter.fetchData();
   }
 
   @override
@@ -55,12 +56,6 @@ class _HomeScreenState extends State<HomeScreen> implements HomeView {
     });
   }
 
-  @override
-  showUsers(List<Question> users) {
-    setState(() {
-      this._users = users;
-    });
-  }
 
   buildBody() {
     if (_isLoading) {
@@ -75,20 +70,20 @@ class _HomeScreenState extends State<HomeScreen> implements HomeView {
     } else {
       return RefreshIndicator(
         onRefresh: () {
-          _homePresenter.fetchData();
+          _answerPressenter.fetchData();
         },
         child: ListView.builder(
           itemBuilder: (context, position) {
             return ListTile(
               leading: Icon(Icons.help_outline),
               title:
-              Text(_users[position].question),
+              Text(_answer[position].correctAnswer),
               onTap: () {
-                _homePresenter.elementClicked(position);
+                var answerPressenter = _answerPressenter;
               },
             );
           },
-          itemCount: _users.length,
+          itemCount: _answer.length,
           reverse: false,
         ),
       );
@@ -103,8 +98,15 @@ class _HomeScreenState extends State<HomeScreen> implements HomeView {
   }
 
   @override
-  showAnswers(List<Answer> answers) {
-    // TODO: implement showAnswers
+  showAnswers(List<Answer> answer) {
+    setState(() {
+      this._answer = answer;
+    });
+  }
+
+  @override
+  showUsers(List<Question> users) {
+    // TODO: implement showUsers
     return null;
   }
 
